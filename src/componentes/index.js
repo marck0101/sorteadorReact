@@ -37,7 +37,15 @@ export default function Index() {
   }
 
   function handleClickSorteio() {
-    alert(sorteador[Math.floor(Math.random() * sorteador.length)]);
+    //vai pegar as posições do array e vai fazer o sorteio
+    // alert(sorteador[Math.floor(Math.random() * sorteador.length)]);
+    //setSorteados recebe e seta o valor no sorteados
+    // setSorteados([sorteador[Math.floor(Math.random() * sorteador.length)]]);
+    if (sorteados.length > 0) {
+      setSorteados([...sorteados, sorteador[Math.floor(Math.random() * sorteador.length)]]);
+    } else {
+      setSorteados([sorteador[Math.floor(Math.random() * sorteador.length)]]);
+    }
   }
 
   return (
@@ -69,16 +77,17 @@ export default function Index() {
           </>
         );
       })}
-      Lista de Sorteados:
+      <button onClick={() => {handleClickSorteio();}}>Sortear</button><br/>
+      Lista de Sorteados:<br/>
       {/* <br /> */}
-      <button onClick={() => {handleClickSorteio();}}>Sortear</button>
-      {/*sorteador.map((sort) => {
+      {/*sorteador.map((sort) => {return(<><b>{sort}</b><br/></>)})*/}
+      {sorteados.map((item) => {
         return(
-        <>
-        <b>{sort}</b><br/>
-        </>
-        )
-      })*/}
+          <>
+          <b>{item}</b><br/>
+          </>
+          )})
+        }
     </div>
   );
 }
