@@ -11,6 +11,7 @@ export default function Index() {
   criar função para capturar o valor randomicamente, salvar no array dos sorteados e apagar do array sorteador
   criar função para limpar tudo 
   criar função para reiniciar o sorteio, pegando o original e espelhando novamente para o sorteador e limpar os valores sorteados
+  colocar um alerta quando não tiver mais valores a ser sorteados, não sortear campo em branco 
   */
 
   function handleInsertValue() {
@@ -21,6 +22,11 @@ export default function Index() {
         setOriginal([item]);
       }
     }
+  }
+
+  function resetSorteio() {
+    setSorteador(original);
+    setSorteados([]);
   }
 
   useEffect(() => {
@@ -41,11 +47,42 @@ export default function Index() {
     // alert(sorteador[Math.floor(Math.random() * sorteador.length)]);
     //setSorteados recebe e seta o valor no sorteados
     // setSorteados([sorteador[Math.floor(Math.random() * sorteador.length)]]);
-    if (sorteados.length > 0) {
-      setSorteados([...sorteados, sorteador[Math.floor(Math.random() * sorteador.length)]]);
+    if (sorteador.length === 0 || sorteador.length === undefined) {
+      alert("Não há itens a serem sorteados");
     } else {
-      setSorteados([sorteador[Math.floor(Math.random() * sorteador.length)]]);
+      if (sorteados.length > 0) {
+        setSorteados([
+          ...sorteados,
+          //vai estar pegando uma posição do array sorteador e sortear
+          sorteador[Math.floor(Math.random() * sorteador.length)],
+        ]);
+      } else {
+        //vai estar pegando uma posição do array sorteador e sortear
+        setSorteados([sorteador[Math.floor(Math.random() * sorteador.length)]]);
+      }
     }
+  }
+
+  useEffect(() => {
+    retiraValorSorteadoListagem();
+  }, [sorteados]);
+
+  function retiraValorSorteadoListagem() {
+    const newSorteador = [];
+    sorteador.forEach((item) => {
+      if (item !== valorSorteado()) {
+        newSorteador.push(item);
+      }
+    });
+    setSorteador(newSorteador);
+  }
+
+  function valorSorteado() {
+    console.log(sorteados[sorteados.length - 1]);
+    return (
+      //valor que está na última posição sorteados[sorteados.length - 1]
+      sorteados[sorteados.length - 1]
+    );
   }
 
   return (
@@ -54,6 +91,7 @@ export default function Index() {
       <input
         id="valor"
         // o onChange chama um evento toda vez que um objeto sofrer alteração
+        // target onde vai sofrer alteração, precisa por esse target
         onChange={(e) => {
           handleChangeValue(e.target.value);
         }}
@@ -65,7 +103,7 @@ export default function Index() {
           handleInsertValue();
         }}
       >
-        OK
+        LISTAR
       </button>{" "}
       <br />
       Lista à Sortear: <br />
@@ -77,17 +115,27 @@ export default function Index() {
           </>
         );
       })}
-      <button onClick={() => {handleClickSorteio();}}>Sortear</button><br/>
-      Lista de Sorteados:<br/>
+      <button
+        onClick={() => {
+          handleClickSorteio();
+        }}
+      >
+        Sortear
+      </button>
+      <br />
+      Lista de Sorteados:
+      <br />
       {/* <br /> */}
       {/*sorteador.map((sort) => {return(<><b>{sort}</b><br/></>)})*/}
       {sorteados.map((item) => {
-        return(
+        return (
           <>
-          <b>{item}</b><br/>
+            <b>{item}</b>
+            <br />
           </>
-          )})
-        }
+        );
+      })}
+      <button onClick={resetSorteio}>resetar Sorteio</button>
     </div>
   );
 }
