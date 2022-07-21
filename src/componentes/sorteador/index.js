@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 export default function Index() {
+  const [item, setItem] = useState("");
   const [original, setOriginal] = useState([]);
   const [sorteador, setSorteador] = useState([]);
-  const [item, setItem] = useState("");
   const [sorteados, setSorteados] = useState([]);
 
   /*
@@ -34,11 +34,11 @@ export default function Index() {
   }, [original]);
 
   useEffect(() => {
-    console.log("sorteador->", sorteador);
+    // console.log("sorteador->", sorteador);
   }, [sorteador]);
 
   function handleChangeValue(valor) {
-    console.log("valor ->", valor);
+    // console.log("valor ->", valor);
     setItem(valor);
   }
 
@@ -78,7 +78,7 @@ export default function Index() {
   }
 
   function valorSorteado() {
-    console.log(sorteados[sorteados.length - 1]);
+    // console.log(sorteados[sorteados.length - 1]);
     return (
       //valor que está na última posição sorteados[sorteados.length - 1]
       sorteados[sorteados.length - 1]
@@ -105,7 +105,9 @@ export default function Index() {
       >
         LISTAR
       </button>{" "}
+
       <br />
+      
       Lista à Sortear: <br />
       {sorteador.map((sort) => {
         return (
