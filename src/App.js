@@ -1,16 +1,16 @@
 // import logo from './logo.svg';
 import "./App.css";
 import Index from "./componentes/sorteador";
-import Lista from "./componentes/lista/lista";
+// import Lista from "./componentes/lista/lista";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {/* <Index /> */}
+        <Index />
         {/* <br/><br/>
         <hr/>   <hr/>   <hr/>   <hr/> */}
-        <Lista />
+        {/* <Lista /> */}
       </header>
     </div>
   );
